@@ -14,7 +14,7 @@ window.onload = function () {
   const equal = document.getElementById("=");
   const mul = document.getElementById("*");
   const div = document.getElementById("/");
-  const comma = document.getElementById(",");
+  const point = document.getElementById(".");
   const backspace = document.getElementById("backspace");
   const clear = document.getElementById("C");
   let output = document.getElementById("result");
@@ -23,15 +23,20 @@ window.onload = function () {
   let sign = null;
   let firstStringIsWrite = false;
   let arrayNumber = [zero, one, two, three, four, five, six, seven, eight, nine];
+  let arrayOfOperations = [add, sub, mul, div];
+  const MAX_LENGHT_DISPLAY = 3;
+  const MAX_COUNT_NUMBER = 8;
 
   function changeString(string, newSymbol) {
     if (string == null) {
       string = newSymbol;
       output.value = string;
       return string;
-    } else {
+    } else if (string.length < MAX_COUNT_NUMBER) {
       string = string + newSymbol;
       output.value = string;
+      return string;
+    } else {
       return string;
     }
   }
@@ -52,8 +57,10 @@ window.onload = function () {
     "click",
     () => {
       output.value = "0";
-      firstNumber = null;
-      secondNumber = null;
+      firstString = null;
+      secondString = null;
+      firstStringIsWrite = false;
+      sign = null;
     },
     false
   );
@@ -69,7 +76,6 @@ window.onload = function () {
         }
         firstString = firstString.substring(0, firstString.length - 1);
         output.value = firstString;
-        console.log(firstString);
       } else {
         if (secondString.length == 1) {
           secondString = "0";
@@ -82,4 +88,110 @@ window.onload = function () {
     },
     false
   );
+
+  point.addEventListener(
+    "click",
+    () => {
+      if (!firstStringIsWrite) {
+        if (firstString.includes(".")) {
+          return;
+        }
+        firstString = firstString + ".";
+        output.value = firstString;
+      } else {
+        if (secondString.includes(".")) {
+          return;
+        }
+        secondString = secondString + ".";
+        output.value = secondString;
+      }
+    },
+    false
+  );
+
+  equal.addEventListener(
+    "click",
+    () => {
+      console.log(`firstString = ${firstString}
+		secondString = ${secondString};
+		sign = ${sign}`);
+      if (firstStringIsWrite && secondString != null) {
+        switch (sign) {
+          case "+":
+            firstString = Number(firstString) + Number(secondString);
+            output.value = firstString.toFixed(MAX_LENGHT_DISPLAY).toString();
+            sign = null;
+            secondString = null;
+            break;
+
+          case "-":
+            firstString = Number(firstString) - Number(secondString);
+            output.value = firstString.toFixed(MAX_LENGHT_DISPLAY).toString();
+            sign = null;
+            secondString = null;
+            break;
+
+          case "*":
+            firstString = Number(firstString) * Number(secondString);
+            output.value = firstString.toFixed(MAX_LENGHT_DISPLAY).toString();
+            sign = null;
+            secondString = null;
+            break;
+
+          case "/":
+            firstString = Number(firstString) / Number(secondString);
+            output.value = firstString.toFixed(MAX_LENGHT_DISPLAY).toString();
+            sign = null;
+            secondString = null;
+            break;
+          default:
+            break;
+        }
+      }
+    },
+    false
+  );
+
+  arrayOfOperations.forEach((item) => {
+    function handlerOperation() {
+      if (firstStringIsWrite && secondString != null) {
+        switch (sign) {
+          case "+":
+            firstString = Number(firstString) + Number(secondString);
+            output.value = firstString.toFixed(MAX_LENGHT_DISPLAY).toString();
+            sign = "+";
+            secondString = null;
+            break;
+
+          case "-":
+            firstString = Number(firstString) - Number(secondString);
+            output.value = firstString.toFixed(MAX_LENGHT_DISPLAY).toString();
+            sign = "-";
+            secondString = null;
+            break;
+
+          case "*":
+            firstString = Number(firstString) * Number(secondString);
+            output.value = firstString.toFixed(MAX_LENGHT_DISPLAY).toString();
+            sign = "*";
+            secondString = null;
+            break;
+
+          case "/":
+            firstString = Number(firstString) / Number(secondString);
+            output.value = firstString.toFixed(MAX_LENGHT_DISPLAY).toString();
+            sign = "/";
+            secondString = null;
+            break;
+
+          default:
+            break;
+        }
+      } else {
+        firstStringIsWrite = true;
+      }
+      sign = item.id;
+    }
+    item.addEventListener("click", handlerOperation, false);
+  });
 };
