@@ -17,8 +17,12 @@ window.onload = function () {
   const point = document.getElementById(".");
   const backspace = document.getElementById("backspace");
   const clear = document.getElementById("C");
+  const singNumber = document.getElementById("+/-");
+
   let output = document.getElementById("result");
+  let signFirstString = "";
   let firstString = null;
+  let signSecondString = "";
   let secondString = null;
   let sign = null;
   let firstStringIsWrite = false;
@@ -27,7 +31,11 @@ window.onload = function () {
   const MAX_COUNT_NUMBER = 8;
 
   function roundingNumber(number) {
-    if (number.length > MAX_COUNT_NUMBER) {
+    if (Number(number) < 0) {
+      number = number.substring(1, number.length);
+      signFirstString = "-";
+    }
+    if (number.length > MAX_COUNT_NUMBER || number == Infinity) {
       let indexPoint = number.indexOf(".");
       if (indexPoint > MAX_COUNT_NUMBER || indexPoint == -1) {
         firstString = null;
@@ -39,7 +47,7 @@ window.onload = function () {
         number = Number(number)
           .toFixed(MAX_COUNT_NUMBER - indexPoint)
           .toString();
-          
+
         while (number.endsWith("0") || number.endsWith(".")) {
           if (number.endsWith(".")) {
             number = number.substring(0, number.length - 1);
@@ -87,6 +95,8 @@ window.onload = function () {
       secondString = null;
       firstStringIsWrite = false;
       sign = null;
+      signFirstString = "";
+      signSecondString = "";
     },
     false
   );
@@ -144,35 +154,44 @@ window.onload = function () {
   equal.addEventListener(
     "click",
     () => {
-      console.log(`firstString = ${firstString}
-		secondString = ${secondString};
-		sign = ${sign}`);
       if (firstStringIsWrite && secondString != null) {
         switch (sign) {
           case "+":
-            firstString = Number(firstString) + Number(secondString);
-            output.value = roundingNumber(firstString.toString());
+            firstString =
+              Number(signFirstString + firstString) +
+              Number(signSecondString + secondString);
+            firstString = roundingNumber(firstString.toString());
+            output.value = signFirstString + firstString;
             sign = null;
             secondString = null;
             break;
 
           case "-":
-            firstString = Number(firstString) - Number(secondString);
-            output.value = roundingNumber(firstString.toString());
+            firstString =
+              Number(signFirstString + firstString) -
+              Number(signSecondString + secondString);
+            firstString = roundingNumber(firstString.toString());
+            output.value = signFirstString + firstString;
             sign = null;
             secondString = null;
             break;
 
           case "*":
-            firstString = Number(firstString) * Number(secondString);
-            output.value = roundingNumber(firstString.toString());
+            firstString =
+              Number(signFirstString + firstString) *
+              Number(signSecondString + secondString);
+            firstString = roundingNumber(firstString.toString());
+            output.value = signFirstString + firstString;
             sign = null;
             secondString = null;
             break;
 
           case "/":
-            firstString = Number(firstString) / Number(secondString);
-            output.value = roundingNumber(firstString.toString());
+            firstString =
+              Number(signFirstString + firstString) /
+              Number(signSecondString + secondString);
+            firstString = roundingNumber(firstString.toString());
+            output.value = signFirstString + firstString;
             sign = null;
             secondString = null;
             break;
@@ -184,34 +203,68 @@ window.onload = function () {
     false
   );
 
+  singNumber.addEventListener(
+    "click",
+    () => {
+      if (secondString == null) {
+        if (signFirstString == "") {
+          signFirstString = "-";
+        } else {
+          signFirstString = "";
+        }
+        output.value = signFirstString + firstString;
+      } else {
+        if (signSecondString == "") {
+          signSecondString = "-";
+        } else {
+          signSecondString = "";
+        }
+        output.value = signSecondString + secondString;
+      }
+    },
+    false
+  );
+
   arrayOfOperations.forEach((item) => {
     function handlerOperation() {
       if (firstStringIsWrite && secondString != null) {
         switch (sign) {
           case "+":
-            firstString = Number(firstString) + Number(secondString);
-            output.value = roundingNumber(firstString.toString());
+            firstString =
+              Number(signFirstString + firstString) +
+              Number(signSecondString + secondString);
+            firstString = roundingNumber(firstString.toString());
+            output.value = signFirstString + firstString;
             sign = "+";
             secondString = null;
             break;
 
           case "-":
-            firstString = Number(firstString) - Number(secondString);
-            output.value = roundingNumber(firstString.toString());
+            firstString =
+              Number(signFirstString + firstString) -
+              Number(signSecondString + secondString);
+            firstString = roundingNumber(firstString.toString());
+            output.value = signFirstString + firstString;
             sign = "-";
             secondString = null;
             break;
 
           case "*":
-            firstString = Number(firstString) * Number(secondString);
-            output.value = roundingNumber(firstString.toString());
+            firstString =
+              Number(signFirstString + firstString) *
+              Number(signSecondString + secondString);
+            firstString = roundingNumber(firstString.toString());
+            output.value = signFirstString + firstString;
             sign = "*";
             secondString = null;
             break;
 
           case "/":
-            firstString = Number(firstString) / Number(secondString);
-            output.value = roundingNumber(firstString.toString());
+            firstString =
+              Number(signFirstString + firstString) /
+              Number(signSecondString + secondString);
+            firstString = roundingNumber(firstString.toString());
+            output.value = signFirstString + firstString;
             sign = "/";
             secondString = null;
             break;
