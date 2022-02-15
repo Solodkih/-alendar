@@ -41,6 +41,8 @@ window.onload = function () {
         firstString = null;
         secondString = null;
         firstStringIsWrite = false;
+        signFirstString = "";
+        signSecondString = "";
         sign = null;
         return "Error";
       } else {
@@ -105,6 +107,9 @@ window.onload = function () {
     "click",
     () => {
       if (!firstStringIsWrite) {
+        if (firstString == null) {
+          return;
+        }
         if (firstString.length == 1) {
           firstString = "0";
           output.value = firstString;
@@ -113,6 +118,9 @@ window.onload = function () {
         firstString = firstString.substring(0, firstString.length - 1);
         output.value = firstString;
       } else {
+        if (secondString == null) {
+          return;
+        }
         if (secondString.length == 1) {
           secondString = "0";
           output.value = secondString;
@@ -129,6 +137,9 @@ window.onload = function () {
     "click",
     () => {
       if (!firstStringIsWrite) {
+        if (firstString == null) {
+          firstString = "0";
+        }
         if (
           firstString.includes(".") ||
           firstString.length >= MAX_COUNT_NUMBER - 1
@@ -138,6 +149,9 @@ window.onload = function () {
         firstString = firstString + ".";
         output.value = firstString;
       } else {
+        if (secondString == null) {
+          secondString = "0";
+        }
         if (
           secondString.includes(".") ||
           secondString.length >= MAX_COUNT_NUMBER - 1
@@ -206,6 +220,9 @@ window.onload = function () {
   singNumber.addEventListener(
     "click",
     () => {
+      if (firstString == null || firstString == "Error") {
+        return;
+      }
       if (secondString == null) {
         if (signFirstString == "") {
           signFirstString = "-";
