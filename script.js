@@ -30,6 +30,42 @@ window.onload = function () {
   let arrayOfOperations = [add, sub, mul, div];
   const MAX_COUNT_NUMBER = 8;
 
+  arrayNumber.forEach((item) => {
+    function handlerChangeString() {
+      store.dispatch({ type: item.id, payload: item.id });
+    }
+    item.addEventListener("click", handlerChangeString);
+  });
+
+  clear.addEventListener("click", () => {
+    store.dispatch({ type: clear.id });
+  });
+
+  point.addEventListener("click", () => {
+    store.dispatch({ type: point.id });
+  });
+
+  arrayOfOperations.forEach((item) => {
+    function handlerChangeString() {
+      store.dispatch({ type: item.id });
+    }
+    item.addEventListener("click", handlerChangeString);
+  });
+
+  singNumber.addEventListener("click", () => {
+    store.dispatch({ type: singNumber.id });
+  });
+
+  backspace.addEventListener("click", () => {
+    store.dispatch({ type: backspace.id });
+  });
+
+  equal.addEventListener("click", () => {
+    store.dispatch({ type: equal.id });
+  });
+
+
+  /*
   function roundingNumber(number) {
     if (Number(number) < 0) {
       number = number.substring(1, number.length);
@@ -295,5 +331,5 @@ window.onload = function () {
       sign = item.id;
     }
     item.addEventListener("click", handlerOperation, false);
-  });
+  });*/
 };
