@@ -19,7 +19,7 @@ window.onload = function () {
   const clear = document.getElementById("C");
   const singNumber = document.getElementById("+/-");
 
-  let output = document.getElementById("result");
+  let display = document.getElementById("result");
   let signFirstString = "";
   let firstString = null;
   let signSecondString = "";
@@ -29,6 +29,23 @@ window.onload = function () {
   let arrayNumber = [zero, one, two, three, four, five, six, seven, eight, nine];
   let arrayOfOperations = [add, sub, mul, div];
   const MAX_COUNT_NUMBER = 8;
+
+  const updateDisplay = (state) => {
+    if (state.result !== null) {
+      display.textContent = state.result;
+      return;
+    }
+    const str = state.array.reduce((acc, item) => {
+      item.forEach((subItem) => {
+        acc += subItem;
+      });
+      acc += " ";
+      return acc;
+    }, "");
+    display.textContent = str;
+  };
+
+  subscribe(updateDisplay);
 
   arrayNumber.forEach((item) => {
     function handlerChangeString() {
@@ -63,6 +80,4 @@ window.onload = function () {
   equal.addEventListener("click", () => {
     store.dispatch({ type: equal.id });
   });
-
-
 };

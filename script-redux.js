@@ -7,8 +7,8 @@
 
   function dispatch(action) {
     let newState = {
-      result: reducerResult(state.result, action),
       array: reducerArray(state.array, action),
+      result: reducerResult(state.result, action),
     };
     if (newState.array !== state.array || newState.result !== state.result) {
       state = newState;
@@ -57,6 +57,10 @@
       });
     });
 
+    if (!ArrayNotContainDivMulSubAdd(copyState.at(-1))) {
+      copyState.pop();
+    }
+
     const arrayNumber = copyState.map((item) => {
       if (!ArrayNotContainDivMulSubAdd(item)) {
         return item.at(-1);
@@ -70,6 +74,7 @@
       });
       return Number(newItem);
     });
+    console.log("arrayNumber", arrayNumber);
 
     arrayNumber.forEach((item, index, array) => {
       if (item !== "*" && item !== "/") {
@@ -214,9 +219,17 @@ function reducerResult(state, action) {
     case "8":
     case "9":
     case "C":
+    case "+/-":
+    case ".":
+    case "*":
+    case "+":
+    case "-":
+    case "/":
+    case "backspace":
       return null;
     case "=":
-      return result(store.getState().array);
+      if (state === null) return result(store.getState().array);
+      return null;
     default:
       return state;
   }
