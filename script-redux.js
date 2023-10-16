@@ -12,7 +12,6 @@
     };
     if (newState.array !== state.array || newState.result !== state.result) {
       state = newState;
-      console.log(newState);
       listener(store.getState());
     }
   }
@@ -30,6 +29,8 @@
     getState,
     subscribe,
   };
+  window.MAX_NUMBER = 9999999999;
+  window.MAX_DEGREE = 10;
 
   function divMulSubAdd(first, symbol, second) {
     switch (symbol) {
@@ -74,7 +75,6 @@
       });
       return Number(newItem);
     });
-    console.log("arrayNumber", arrayNumber);
 
     arrayNumber.forEach((item, index, array) => {
       if (item !== "*" && item !== "/") {
@@ -87,8 +87,6 @@
 
     const arrayNumberWithoutDivMull = arrayNumber.filter((item) => item !== null);
 
-    console.log("arrayNumberWithoutDivMull", arrayNumberWithoutDivMull);
-
     arrayNumberWithoutDivMull.forEach((item, index, array) => {
       if (item === "+" || item === "-") {
         array[index + 1] = divMulSubAdd(array[index - 1], item, array[index + 1]);
@@ -97,7 +95,6 @@
       }
     });
 
-    console.log(arrayNumberWithoutDivMull.at(-1));
     return arrayNumberWithoutDivMull.at(-1);
   }
 
@@ -118,97 +115,92 @@
       case "id_6":
       case "id_7":
       case "id_8":
-      case "id_9":
-        return (() => {
-          if (state.at(-1).length === 0) {
-            return [[action.payload.number.substr(-1, 1)]];
-          }
-          if (action.payload.result !== null) {
-            return [[action.payload.number.substr(-1, 1)]];
-          }
+      case "id_9": {
+        if (state.at(-1).length === 0) {
+          return [[action.payload.number.substr(-1, 1)]];
+        }
+        if (action.payload.result !== null) {
+          return [[action.payload.number.substr(-1, 1)]];
+        }
 
-          if (ArrayNotContainDivMulSubAdd(state.at(-1))) {
-            if (state.at(-1).length > 10) {
-              return state;
-            }
-            const newState = [...state];
-            newState.at(-1).push(action.payload.number.substr(-1, 1));
-            return newState;
+        if (ArrayNotContainDivMulSubAdd(state.at(-1))) {
+          if (state.at(-1).length > MAX_DEGREE) {
+            return state;
           }
-          return [...state, [action.payload.number.substr(-1, 1)]];
-        })();
+          const newState = [...state];
+          newState.at(-1).push(action.payload.number.substr(-1, 1));
+          return newState;
+        }
+        return [...state, [action.payload.number.substr(-1, 1)]];
+      }
       case "id_*":
       case "id_+":
       case "id_-":
-      case "id_/":
-        return (() => {
-          if (state.at(-1).length === 0) {
-            return state;
-          }
-          if (!ArrayNotContainDivMulSubAdd(state.at(-1))) {
-            const newItem = [...state.at(-1)];
-            newItem.pop();
-            newItem.push(action.type.substr(-1, 1));
-            const newState = [...state];
-            newState.pop();
-            newState.push(newItem);
-            return newState;
-          }
-          return [...state, [action.type.substr(-1, 1)]];
-        })();
+      case "id_/": {
+        if (state.at(-1).length === 0) {
+          return state;
+        }
+        if (!ArrayNotContainDivMulSubAdd(state.at(-1))) {
+          const newItem = [...state.at(-1)];
+          newItem.pop();
+          newItem.push(action.type.substr(-1, 1));
+          const newState = [...state];
+          newState.pop();
+          newState.push(newItem);
+          return newState;
+        }
+        return [...state, [action.type.substr(-1, 1)]];
+      }
 
       case "id_C": {
         return [[]];
       }
 
-      case "id_.":
-        return (() => {
-          if (state.at(-1).length === 0) {
-            return state;
-          }
-          if (!ArrayNotContainDivMulSubAdd(state.at(-1))) {
-            return state;
-          }
-          if (state[state.length - 1].includes(".")) {
-            return state;
-          }
+      case "id_.": {
+        if (state.at(-1).length === 0) {
+          return state;
+        }
+        if (!ArrayNotContainDivMulSubAdd(state.at(-1))) {
+          return state;
+        }
+        if (state[state.length - 1].includes(".")) {
+          return state;
+        }
+        const newState = [...state];
+        newState.at(-1).push(".");
+        return newState;
+      }
+
+      case "id_+/-": {
+        if (state.at(-1).length === 0) {
+          return state;
+        }
+        if (!ArrayNotContainDivMulSubAdd(state.at(-1))) {
+          return state;
+        }
+
+        const newState = [...state];
+
+        if (newState.at(-1).at(0) === "-") {
+          newState.at(-1).shift();
+        } else {
+          newState.at(-1).unshift("-");
+        }
+        return newState;
+      }
+
+      case "id_backspace": {
+        if (state.at(-1).length !== 0) {
           const newState = [...state];
-          newState.at(-1).push(".");
-          return newState;
-        })();
-
-      case "id_+/-":
-        return (() => {
-          if (state.at(-1).length === 0) {
-            return state;
-          }
-          if (!ArrayNotContainDivMulSubAdd(state.at(-1))) {
-            return state;
-          }
-
-          const newState = [...state];
-
-          if (newState.at(-1).at(0) === "-") {
-            newState.at(-1).shift();
-          } else {
-            newState.at(-1).unshift("-");
-          }
-          return newState;
-        })();
-
-      case "id_backspace":
-        return (() => {
-          if (state.at(-1).length !== 0) {
-            const newState = [...state];
-            newState.at(-1).pop();
-            if (newState.length > 1 && newState.at(-1).length === 0) {
-              newState.pop();
-              return newState;
-            }
+          newState.at(-1).pop();
+          if (newState.length > 1 && newState.at(-1).length === 0) {
+            newState.pop();
             return newState;
           }
-          return state;
-        })();
+          return newState;
+        }
+        return state;
+      }
 
       default:
         return state;

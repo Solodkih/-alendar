@@ -1,4 +1,4 @@
-window.onload = function () {
+{
   const one = document.getElementById("id_1");
   const two = document.getElementById("id_2");
   const three = document.getElementById("id_3");
@@ -19,9 +19,9 @@ window.onload = function () {
   const clear = document.getElementById("id_C");
   const singNumber = document.getElementById("id_+/-");
 
-  let display = document.getElementById("numbers");
-  let arrayNumber = [zero, one, two, three, four, five, six, seven, eight, nine];
-  let arrayOfOperations = [add, sub, mul, div];
+  const display = document.getElementById("numbers");
+  const arrayNumber = [zero, one, two, three, four, five, six, seven, eight, nine];
+  const arrayOfOperations = [add, sub, mul, div];
 
   const updateDisplay = (state) => {
     if (state.result !== null) {
@@ -30,12 +30,12 @@ window.onload = function () {
         return;
       }
 
-      if (state.result >= 9999999999) {
-        display.textContent = state.result.toExponential(10);
+      if (state.result >= MAX_NUMBER || state.result <= -MAX_NUMBER) {
+        display.textContent = state.result.toExponential(MAX_DEGREE);
         return;
       }
 
-      display.textContent = +state.result.toFixed(10);
+      display.textContent = +state.result.toFixed(MAX_DEGREE);
       return;
     }
     let str = state.array.reduce((acc, item) => {
@@ -92,4 +92,4 @@ window.onload = function () {
   equal.addEventListener("click", () => {
     store.dispatch({ type: equal.id, payload: store.getState().array });
   });
-};
+}
