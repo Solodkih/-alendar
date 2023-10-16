@@ -124,6 +124,9 @@
             return [[action.payload.substr(-1, 1)]];
           }
           if (ArrayNotContainDivMulSubAdd(state.at(-1))) {
+            if (state.at(-1).length > 10) {
+              return state;
+            }
             const newState = [...state];
             newState.at(-1).push(action.payload.substr(-1, 1));
             return newState;

@@ -25,16 +25,32 @@ window.onload = function () {
 
   const updateDisplay = (state) => {
     if (state.result !== null) {
-      display.textContent = state.result;
+      if (state.result === NaN || state.result === Infinity) {
+        display.textContent = "Error";
+        return;
+      }
+
+      if (state.result >= 9999999999) {
+        display.textContent = state.result.toExponential(10);
+        return;
+      }
+
+      display.textContent = +state.result.toFixed(10);
       return;
     }
-    const str = state.array.reduce((acc, item) => {
+    let str = state.array.reduce((acc, item) => {
       item.forEach((subItem) => {
+        console.log("subItem", acc, subItem);
         acc += subItem;
       });
-      acc += " ";
+      acc += "\n";
       return acc;
     }, "");
+
+    if (str === "\n") {
+      str = "0";
+    }
+
     display.textContent = str;
     display.scrollTop = display.scrollHeight;
   };
