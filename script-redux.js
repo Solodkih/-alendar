@@ -87,6 +87,8 @@
 
     const arrayNumberWithoutDivMull = arrayNumber.filter((item) => item !== null);
 
+    console.log("arrayNumberWithoutDivMull", arrayNumberWithoutDivMull);
+
     arrayNumberWithoutDivMull.forEach((item, index, array) => {
       if (item === "+" || item === "-") {
         array[index + 1] = divMulSubAdd(array[index - 1], item, array[index + 1]);
@@ -95,6 +97,7 @@
       }
     });
 
+    console.log(arrayNumberWithoutDivMull.at(-1));
     return arrayNumberWithoutDivMull.at(-1);
   }
 
@@ -106,31 +109,31 @@
 
   function reducerArray(state, action) {
     switch (action.type) {
-      case "0":
-      case "1":
-      case "2":
-      case "3":
-      case "4":
-      case "5":
-      case "6":
-      case "7":
-      case "8":
-      case "9":
+      case "id_0":
+      case "id_1":
+      case "id_2":
+      case "id_3":
+      case "id_4":
+      case "id_5":
+      case "id_6":
+      case "id_7":
+      case "id_8":
+      case "id_9":
         return (() => {
           if (state.at(-1).length === 0) {
-            return [[action.payload]];
+            return [[action.payload.substr(-1, 1)]];
           }
           if (ArrayNotContainDivMulSubAdd(state.at(-1))) {
             const newState = [...state];
-            newState.at(-1).push(action.payload);
+            newState.at(-1).push(action.payload.substr(-1, 1));
             return newState;
           }
-          return [...state, [action.payload]];
+          return [...state, [action.payload.substr(-1, 1)]];
         })();
-      case "*":
-      case "+":
-      case "-":
-      case "/":
+      case "id_*":
+      case "id_+":
+      case "id_-":
+      case "id_/":
         return (() => {
           if (state.at(-1).length === 0) {
             return state;
@@ -138,20 +141,20 @@
           if (!ArrayNotContainDivMulSubAdd(state.at(-1))) {
             const newItem = [...state.at(-1)];
             newItem.pop();
-            newItem.push(action.type);
+            newItem.push(action.type.substr(-1, 1));
             const newState = [...state];
             newState.pop();
             newState.push(newItem);
             return newState;
           }
-          return [...state, [action.type]];
+          return [...state, [action.type.substr(-1, 1)]];
         })();
 
-      case "C": {
+      case "id_C": {
         return [[]];
       }
 
-      case ".":
+      case "id_.":
         return (() => {
           if (state.at(-1).length === 0) {
             return state;
@@ -167,7 +170,7 @@
           return newState;
         })();
 
-      case "+/-":
+      case "id_+/-":
         return (() => {
           if (state.at(-1).length === 0) {
             return state;
@@ -186,7 +189,7 @@
           return newState;
         })();
 
-      case "backspace":
+      case "id_backspace":
         return (() => {
           if (state.at(-1).length !== 0) {
             const newState = [...state];
@@ -208,26 +211,26 @@
 
 function reducerResult(state, action) {
   switch (action.type) {
-    case "0":
-    case "1":
-    case "2":
-    case "3":
-    case "4":
-    case "5":
-    case "6":
-    case "7":
-    case "8":
-    case "9":
-    case "C":
-    case "+/-":
-    case ".":
-    case "*":
-    case "+":
-    case "-":
-    case "/":
-    case "backspace":
+    case "id_0":
+    case "id_1":
+    case "id_2":
+    case "id_3":
+    case "id_4":
+    case "id_5":
+    case "id_6":
+    case "id_7":
+    case "id_8":
+    case "id_9":
+    case "id_C":
+    case "id_+/-":
+    case "id_.":
+    case "id_*":
+    case "id_+":
+    case "id_-":
+    case "id_/":
+    case "id_backspace":
       return null;
-    case "=":
+    case "id_=":
       if (state === null) return result(store.getState().array);
       return null;
     default:
