@@ -25,7 +25,7 @@ window.onload = function () {
 
   const updateDisplay = (state) => {
     if (state.result !== null) {
-      if (state.result === NaN || state.result === Infinity) {
+      if (isNaN(state.result) || state.result === Infinity) {
         display.textContent = "Error";
         return;
       }
@@ -40,7 +40,6 @@ window.onload = function () {
     }
     let str = state.array.reduce((acc, item) => {
       item.forEach((subItem) => {
-        console.log("subItem", acc, subItem);
         acc += subItem;
       });
       acc += "\n";
@@ -59,7 +58,10 @@ window.onload = function () {
 
   arrayNumber.forEach((item) => {
     function handlerChangeString() {
-      store.dispatch({ type: item.id, payload: item.id });
+      store.dispatch({
+        type: item.id,
+        payload: { number: item.id, result: store.getState().result },
+      });
     }
     item.addEventListener("click", handlerChangeString);
   });
@@ -88,6 +90,6 @@ window.onload = function () {
   });
 
   equal.addEventListener("click", () => {
-    store.dispatch({ type: equal.id });
+    store.dispatch({ type: equal.id, payload: store.getState().array });
   });
 };

@@ -121,17 +121,21 @@
       case "id_9":
         return (() => {
           if (state.at(-1).length === 0) {
-            return [[action.payload.substr(-1, 1)]];
+            return [[action.payload.number.substr(-1, 1)]];
           }
+          if (action.payload.result !== null) {
+            return [[action.payload.number.substr(-1, 1)]];
+          }
+
           if (ArrayNotContainDivMulSubAdd(state.at(-1))) {
             if (state.at(-1).length > 10) {
               return state;
             }
             const newState = [...state];
-            newState.at(-1).push(action.payload.substr(-1, 1));
+            newState.at(-1).push(action.payload.number.substr(-1, 1));
             return newState;
           }
-          return [...state, [action.payload.substr(-1, 1)]];
+          return [...state, [action.payload.number.substr(-1, 1)]];
         })();
       case "id_*":
       case "id_+":
@@ -234,7 +238,7 @@ function reducerResult(state, action) {
     case "id_backspace":
       return null;
     case "id_=":
-      if (state === null) return result(store.getState().array);
+      if (state === null) return result(action.payload);
       return null;
     default:
       return state;
