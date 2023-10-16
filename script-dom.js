@@ -93,3 +93,67 @@
     store.dispatch({ type: equal.id, payload: store.getState().array });
   });
 }
+
+document.addEventListener("keydown", (event) => {
+  const action = getActionFromNumpad(event.code);
+  console.log(event.code);
+  if (action) {
+    store.dispatch(action);
+  }
+});
+
+function getActionFromNumpad(code) {
+  switch (code) {
+    case "Numpad0":
+    case "Numpad1":
+    case "Numpad2":
+    case "Numpad3":
+    case "Numpad4":
+    case "Numpad5":
+    case "Numpad6":
+    case "Numpad7":
+    case "Numpad8":
+    case "Numpad9":
+    case "Digit0":
+    case "Digit1":
+    case "Digit2":
+    case "Digit3":
+    case "Digit4":
+    case "Digit5":
+    case "Digit6":
+    case "Digit7":
+    case "Digit8":
+    case "Digit9":
+      return {
+        type: `id_${code.substr(-1, 1)}`,
+        payload: { number: `id_${code.substr(-1, 1)}`, result: store.getState().result },
+      };
+
+    case "NumpadDivide":
+      return { type: "id_/" };
+
+    case "NumpadMultiply":
+      return { type: "id_*" };
+
+    case "NumpadSubtract":
+    case "Minus":
+      return { type: "id_-" };
+
+    case "NumpadAdd":
+      return { type: "id_+" };
+
+    case "NumpadEnter":
+    case "Enter":
+    case "Equal":
+      return { type: "id_=", payload: store.getState().array };
+
+    case "NumpadDecimal":
+      return { type: "id_." };
+
+    case "Backspace":
+      return { type: "id_backspace" };
+
+    default:
+      return null;
+  }
+}

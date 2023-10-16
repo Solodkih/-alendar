@@ -6,12 +6,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-image: linear-gradient(to right, #fc5c7d, #6a82fb);
 }
 
 .calculator {
   width: 223px;
   height: 482px;
-  border-radius: 20px;
+  border-radius: 30px;
   background-color: #000;
   display: flex;
   flex-direction: column;

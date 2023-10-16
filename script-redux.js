@@ -67,12 +67,9 @@
         return item.at(-1);
       }
       const newItem = item.reduce((str, item, index) => {
-        if (index === 0) {
-          str = "";
-        }
         str += item;
         return str;
-      });
+      }, "");
       return Number(newItem);
     });
 
