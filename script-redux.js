@@ -5,6 +5,9 @@
   };
   let listener;
 
+  window.MAX_NUMBER = 9999999999;
+  window.MAX_DEGREE = 10;
+
   function dispatch(action) {
     let newState = {
       array: reducerArray(state.array, action),
@@ -29,8 +32,6 @@
     getState,
     subscribe,
   };
-  window.MAX_NUMBER = 9999999999;
-  window.MAX_DEGREE = 10;
 
   function divMulSubAdd(first, symbol, second) {
     switch (symbol) {

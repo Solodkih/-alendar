@@ -2,17 +2,20 @@ html,
 body {
   height: 100%;
   width: 100%;
+  min-width: 223px;
+  min-height: 482px;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: linear-gradient(to right, #fc5c7d, #6a82fb);
+  background-image: linear-gradient(to right, #fc5c7c, #6a82fa);
 }
 
 .calculator {
   width: 223px;
   height: 482px;
-  border-radius: 30px;
+  font-size: 20px;
+  border-radius: 13% / 6%;
   background-color: #000;
   display: flex;
   flex-direction: column;
@@ -21,61 +24,71 @@ body {
 }
 
 .buttons {
-  width: 195px;
-  height: 257px;
+  width: 86%;
+  height: 53%;
   background-color: #070d18;
   display: flex;
   flex-wrap: wrap;
-  border-radius: 25px;
-  margin: 0px auto 22px auto;
-  padding: 7px 6px 7px 6px;
+  border-radius: 13.8% / 9.7%;
+  margin: 0% auto 11.2% auto;
+  padding: 3.5% 3% 3.5% 3%;
   justify-content: space-around;
   align-items: center;
 }
 
-.result {
-  height: 200px;
+.wrap_result {
+  height: 41.4%;
   width: 100%;
   position: relative;
   display: block;
-  font-size: 20px;
   text-align: right;
   overflow: hidden;
-  margin-bottom: 5px;
+  margin-bottom: 2.2%;
 }
 
-#numbers {
+#result {
   position: absolute;
   bottom: 0px;
   right: 0px;
   max-width: 100%;
   max-height: 100%;
   overflow: auto;
-  padding: 20px 20px 20px 5px;
+  padding: 8.9% 8.9% 8.9% 8.9%;
   white-space: pre-line;
   word-break: break-all;
 }
 
-.button {
-  height: 32px;
-  width: 32px;
+label {
+  width: 25%;
+  height: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #454952;
-  border-radius: 8px;
-  margin: 0px 3px 0px 3px;
+}
+
+.button {
+  height: 67.1%;
+  width: 72%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #454949;
+  border-radius: 25%;
   color: white;
 }
 
-#id_0 {
-  width: 78px;
+label[for="id_0"] {
+  width: 50%;
+}
+label[for="id_0"] > .button {
+  width: 87%;
+  border-radius: 12% / 25%;
 }
 
-.green-text {
+.green_text {
   color: #6bc97a;
 }
 
-.red-text {
+.red_text {
   color: #d46b63;
 }

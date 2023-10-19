@@ -19,9 +19,103 @@
   const clear = document.getElementById("id_C");
   const singNumber = document.getElementById("id_+/-");
 
-  const display = document.getElementById("numbers");
+  const display = document.getElementById("result");
+  const calculator = document.querySelector(".calculator");
+
   const arrayNumber = [zero, one, two, three, four, five, six, seven, eight, nine];
   const arrayOfOperations = [add, sub, mul, div];
+
+  const CoeffWidthHeigh = 0.46255602;
+  const CoeffHeighWidth = 2.161434978;
+  const CoeffFontSizeHeight = 0.041493776;
+  const CoeffOffsetBody = 0.8;
+
+  function getActionFromNumpad(code) {
+    switch (code) {
+      case "Numpad0":
+      case "Numpad1":
+      case "Numpad2":
+      case "Numpad3":
+      case "Numpad4":
+      case "Numpad5":
+      case "Numpad6":
+      case "Numpad7":
+      case "Numpad8":
+      case "Numpad9":
+      case "Digit0":
+      case "Digit1":
+      case "Digit2":
+      case "Digit3":
+      case "Digit4":
+      case "Digit5":
+      case "Digit6":
+      case "Digit7":
+      case "Digit8":
+      case "Digit9":
+        return {
+          type: `id_${code.substr(-1, 1)}`,
+          payload: { number: `id_${code.substr(-1, 1)}`, result: store.getState().result },
+        };
+
+      case "NumpadDivide":
+        return { type: "id_/" };
+
+      case "NumpadMultiply":
+        return { type: "id_*" };
+
+      case "NumpadSubtract":
+      case "Minus":
+        return { type: "id_-" };
+
+      case "NumpadAdd":
+        return { type: "id_+" };
+
+      case "NumpadEnter":
+      case "Enter":
+      case "Equal":
+        return { type: "id_=", payload: store.getState().array };
+
+      case "NumpadDecimal":
+        return { type: "id_." };
+
+      case "Backspace":
+        return { type: "id_backspace" };
+
+      default:
+        return null;
+    }
+  }
+
+  function resize() {
+    {
+      function getHeight(width) {
+        return width * CoeffHeighWidth;
+      }
+
+      function getWidth(height) {
+        return height * CoeffWidthHeigh;
+      }
+
+      function getFontSize(height) {
+        return height * CoeffFontSizeHeight;
+      }
+
+      let height = document.documentElement.clientHeight * CoeffOffsetBody;
+      let width = getWidth(height);
+      if (width <= document.documentElement.clientWidth * CoeffOffsetBody) {
+        calculator.style.height = `${height}px`;
+        calculator.style.width = `${width}px`;
+        calculator.style.fontSize = `${getFontSize(height)}px`;
+        return;
+      }
+
+      width = document.documentElement.clientWidth * CoeffOffsetBody;
+      height = getHeight(width);
+      calculator.style.height = `${height}px`;
+      calculator.style.width = `${width}px`;
+      calculator.style.fontSize = `${getFontSize(height)}px`;
+    }
+  }
 
   const updateDisplay = (state) => {
     if (state.result !== null) {
@@ -55,6 +149,9 @@
   };
 
   subscribe(updateDisplay);
+
+  window.addEventListener("resize", resize);
+  document.addEventListener("DOMContentLoaded", resize);
 
   arrayNumber.forEach((item) => {
     function handlerChangeString() {
@@ -96,64 +193,7 @@
 
 document.addEventListener("keydown", (event) => {
   const action = getActionFromNumpad(event.code);
-  console.log(event.code);
   if (action) {
     store.dispatch(action);
   }
 });
-
-function getActionFromNumpad(code) {
-  switch (code) {
-    case "Numpad0":
-    case "Numpad1":
-    case "Numpad2":
-    case "Numpad3":
-    case "Numpad4":
-    case "Numpad5":
-    case "Numpad6":
-    case "Numpad7":
-    case "Numpad8":
-    case "Numpad9":
-    case "Digit0":
-    case "Digit1":
-    case "Digit2":
-    case "Digit3":
-    case "Digit4":
-    case "Digit5":
-    case "Digit6":
-    case "Digit7":
-    case "Digit8":
-    case "Digit9":
-      return {
-        type: `id_${code.substr(-1, 1)}`,
-        payload: { number: `id_${code.substr(-1, 1)}`, result: store.getState().result },
-      };
-
-    case "NumpadDivide":
-      return { type: "id_/" };
-
-    case "NumpadMultiply":
-      return { type: "id_*" };
-
-    case "NumpadSubtract":
-    case "Minus":
-      return { type: "id_-" };
-
-    case "NumpadAdd":
-      return { type: "id_+" };
-
-    case "NumpadEnter":
-    case "Enter":
-    case "Equal":
-      return { type: "id_=", payload: store.getState().array };
-
-    case "NumpadDecimal":
-      return { type: "id_." };
-
-    case "Backspace":
-      return { type: "id_backspace" };
-
-    default:
-      return null;
-  }
-}
