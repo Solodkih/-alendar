@@ -5,40 +5,37 @@
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="./style.css" />
     <link rel="stylesheet" href="./reset.css" />
+    <script defer src="script-redux.js" type="text/javascript"></script>
+    <script defer src="script-dom.js" type="text/javascript"></script>
     <title>Calculator</title>
   </head>
   <body>
     <div class="calculator">
-      <script src="script.js" type="text/javascript"></script>
-      <output id="result" class="result" name="result">0</output>
+      <div class="wrap_result">
+        <div id="result">0</div>
+      </div>
       <div class="buttons">
-        <div class="header">
-          <div id="C" class="button">C</div>
-          <div id="+/-" class="button">+/-</div>
-          <div id="backspace" class="button">←</div>
-        </div>
-        <div class="body">
-          <div class="body-footer">
-            <div id="0" class="button">0</div>
-            <div id="." class="button">.</div>
-            <div id="=" class="button">=</div>
-          </div>
-          <div id="1" class="button">1</div>
-          <div id="2" class="button">2</div>
-          <div id="3" class="button">3</div>
-          <div id="4" class="button">4</div>
-          <div id="5" class="button">5</div>
-          <div id="6" class="button">6</div>
-          <div id="7" class="button">7</div>
-          <div id="8" class="button">8</div>
-          <div id="9" class="button">9</div>
-        </div>
-        <div class="sidebar">
-          <div id="/" class="button">/</div>
-          <div id="*" class="button">*</div>
-          <div id="-" class="button">-</div>
-          <div id="+" class="button">+</div>
-        </div>
+        <label for="id_C"><button id="id_C" class="button green-text">AC</button></label>
+        <label for="id_+/-"><button id="id_+/-" class="button green-text">+/-</button></label>
+        <label for="id_backspace">
+          <button id="id_backspace" class="button green-text">←</button>
+        </label>
+        <label for="id_/"><button id="id_/" class="button red-text">÷</button></label>
+        <label for="id_7"><button id="id_7" class="button">7</button></label>
+        <label for="id_8"><button id="id_8" class="button">8</button></label>
+        <label for="id_9"><button id="id_9" class="button">9</button></label>
+        <label for="id_*"><button id="id_*" class="button red-text">×</button></label>
+        <label for="id_4"><button id="id_4" class="button">4</button></label>
+        <label for="id_5"><button id="id_5" class="button">5</button></label>
+        <label for="id_6"><button id="id_6" class="button">6</button></label>
+        <label for="id_-"><button id="id_-" class="button red-text">-</button></label>
+        <label for="id_1"><button id="id_1" class="button">1</button></label>
+        <label for="id_2"><button id="id_2" class="button">2</button></label>
+        <label for="id_3"><button id="id_3" class="button">3</button></label>
+        <label for="id_+"><button id="id_+" class="button red-text">+</button></label>
+        <label for="id_0"><button id="id_0" class="button">0</button></label>
+        <label for="id_."><button id="id_." class="button">.</button></label>
+        <label for="id_="><button id="id_=" class="button red-text">=</button></label>
       </div>
     </div>
   </body>
