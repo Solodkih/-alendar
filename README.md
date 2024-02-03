@@ -1,8 +1,3 @@
-# Calculator
-
-This project was created to learn JS and Web Api.
-
-
 # Калькулятор/Calculator
 
 ## Описание репозитория/Description of the repository
@@ -12,3 +7,8 @@ This project was created to learn JS and Web Api.
 
 This repository was created to practice HTML, CSS, and JS skills, as well for understanding Redux concepts. A calculator was implemented in the project own mini-redux and responsive design.
 The repository is created for educational purposes.
+
+## Github-pages
+
+Cсылка на Github-pages/Link to Github-pages:
+[https://solodkih.github.io/calculator/](https://solodkih.github.io/calculator)
